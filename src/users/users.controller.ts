@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Body, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import {
@@ -8,6 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { dataUserResponseExample } from './dto/show-user.dto';
+import { JwtAuthGuard } from '../auth/guards';
 import {
   INTERNAL_SERVER_ERROR,
   UNAUTHORIZED,
@@ -53,6 +61,7 @@ export class UsersController {
   })
   @ApiResponse(UNAUTHORIZED)
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get('me')
   showProfile(@Request() req) {
     return this.userService.show(req.user.userId);
