@@ -5,6 +5,7 @@ import {
   Body,
   Request,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
@@ -64,6 +65,54 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   showProfile(@Request() req) {
-    return this.userService.show(req.user.userId);
+    return this.userService.findOne(req.user.userId);
+  }
+
+  @ApiOperation({ summary: 'Get user by ID.' })
+  @ApiResponse({
+    status: 200,
+    description: 'OK.',
+    schema: {
+      example: dataUserResponseExample,
+    },
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found.',
+    schema: {
+      example: {
+        message: 'User not found',
+        error: 'Not Found',
+        statusCode: 404,
+      },
+    },
+  })
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.userService.findOne(id);
+  }
+
+  @ApiOperation({ summary: 'Search users by term.' })
+  @ApiResponse({
+    status: 200,
+    description: 'OK.',
+    schema: {
+      example: [dataUserResponseExample],
+    },
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found.',
+    schema: {
+      example: {
+        message: 'No users found',
+        error: 'Not Found',
+        statusCode: 404,
+      },
+    },
+  })
+  @Get('search/:term')
+  async search(@Param('term') term: string) {
+    return this.userService.search(term);
   }
 }

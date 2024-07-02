@@ -48,6 +48,19 @@ export class UserRepository implements IUserRepository {
     });
   }
 
+  async search(term: string) {
+    return this.prisma.user.findMany({
+      where: {
+        OR: [
+          { name: { contains: term, mode: 'insensitive' } },
+          { email: { contains: term, mode: 'insensitive' } },
+          { username: { contains: term, mode: 'insensitive' } },
+        ],
+      },
+      select: this.defaultSelect,
+    });
+  }
+
   list() {
     return this.prisma.user.findMany();
   }

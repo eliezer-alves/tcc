@@ -22,7 +22,7 @@ export class UsersService {
     return this.repository.create({ ...data, username: data.email });
   }
 
-  async show(id: string): Promise<ShowUserDto | undefined> {
+  async findOne(id: string): Promise<ShowUserDto | undefined> {
     return this.repository.find(id);
   }
 
@@ -32,5 +32,9 @@ export class UsersService {
 
   async findUniqueByEmail(email: string): Promise<ShowUserDto | undefined> {
     return this.repository.findUniqueByEmail(email);
+  }
+
+  async search(term: string): Promise<Array<ShowUserDto> | undefined> {
+    return this.repository.search(term);
   }
 }
