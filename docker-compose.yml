@@ -3,17 +3,17 @@ version: '3.5'
 services:
   # api
   api01:
+    build: .
     container_name: api01
     hostname: api01
-    build:
-      context: .
-      dockerfile: Dockerfile
     environment:
-      DATABASE_URL: 'postgresql://postgres:password@localhost:5432/postgres?schema=public'
+      DATABASE_URL: 'postgresql://postgres:password@postgres:5432/postgres?schema=public'
       JWT_SECRET: 'e7a58dde987f60c533eed313c3b567f50db9beb890599e244b68b8ba3ed4d68f'
+    expose:
+      - '3000'
     # ports:
-    #   - '3001:3001'
-    network_mode: host
+    #   - '3000:3000'
+    # network_mode: host
     depends_on:
       - postgres
     deploy:
@@ -33,14 +33,14 @@ services:
     restart: always
     environment:
       POSTGRES_DB: postgres
-      POSTGRES_USERNAME: postgres
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     command: postgres -c 'max_connections=450'
     volumes:
       - ./postgresql.conf:/etc/postgresql.conf
-    # ports:
-    #   - '5432:5432'
-    network_mode: host
+    ports:
+      - '5432:5432'
+    # network_mode: host
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready']
       interval: 5s
@@ -61,7 +61,9 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - api01
-    network_mode: host
+    ports:
+      - '9999:9999'
+    # network_mode: host
     deploy:
       resources:
         limits:

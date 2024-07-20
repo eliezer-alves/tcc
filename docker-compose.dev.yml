@@ -9,7 +9,7 @@ services:
     restart: always
     environment:
       POSTGRES_DB: postgres
-      POSTGRES_USERNAME: postgres
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     command: postgres -c 'max_connections=450'
     volumes:
