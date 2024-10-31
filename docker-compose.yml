@@ -2,8 +2,11 @@ version: '3.5'
 
 services:
   # Configuração base para as instâncias da API
-  api_base: &app_config
+  # Instância 1 da API
+  api1: &api
     build: .
+    container_name: api1
+    hostname: api1
     environment:
       DATABASE_URL: 'postgresql://postgres:password@postgres:5432/postgres?schema=public'
       JWT_SECRET: 'e7a58dde987f60c533eed313c3b567f50db9beb890599e244b68b8ba3ed4d68f'
@@ -17,21 +20,13 @@ services:
           cpus: '0.45'
           memory: '0.5G'
 
-  # Instância 1 da API
-  api1:
-    <<: *app_config
-    container_name: api1
-    hostname: api1
-    environment:
-      PORT: '3000'
-
   # Instância 2 da API
   api2:
-    <<: *app_config
+    <<: *api
     container_name: api2
     hostname: api2
-    environment:
-      PORT: '3001'
+    expose:
+      - '3001'
 
   # Serviço PostgreSQL
   postgres:
