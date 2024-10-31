@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { EmailNotRegistered } from '../validation-rules/email-not-registered.rule';
+// import { EmailNotRegistered } from '../validation-rules/email-not-registered.rule';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -16,7 +16,7 @@ export class CreateUserDto {
   })
   @IsNotEmpty()
   @IsEmail()
-  @EmailNotRegistered({ message: 'email already registered' })
+  // @EmailNotRegistered({ message: 'email already registered' })
   email: string;
 
   @ApiProperty({
