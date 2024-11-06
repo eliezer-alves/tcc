@@ -37,4 +37,8 @@ export class UsersService {
   async search(term: string): Promise<Array<ShowUserDto> | undefined> {
     return this.repository.search(term);
   }
+
+  async countUsers(): Promise<number> {
+    return this.repository.count();
+  }
 }
