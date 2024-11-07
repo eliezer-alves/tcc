@@ -150,12 +150,6 @@ export class UsersController {
   async search(@Param('term') term: string, @Res() res: Response) {
     try {
       const users = await this.userService.search(term);
-      if (!users || users.length === 0) {
-        return res.status(HttpStatus.NOT_FOUND).json({
-          message: 'No users found',
-          statusCode: HttpStatus.NOT_FOUND,
-        });
-      }
       return res.status(HttpStatus.OK).json(users);
     } catch (error) {
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
