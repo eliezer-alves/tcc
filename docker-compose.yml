@@ -71,3 +71,8 @@ services:
         limits:
           cpus: '0.1'
           memory: '0.2GB'
+    ulimits:
+      nproc: 1000000
+      nofile:
+        soft: 1000000
+        hard: 1000000
