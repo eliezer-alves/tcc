@@ -10,7 +10,8 @@ services:
     environment:
       DATABASE_URL: 'postgresql://postgres:password@postgres:5432/postgres?schema=public'
       JWT_SECRET: 'e7a58dde987f60c533eed313c3b567f50db9beb890599e244b68b8ba3ed4d68f'
-      COMPRESS: 'false'
+      COMPRESS: 'true'
+      LOGGER: 'false'
     expose:
       - '3000'
     depends_on:
