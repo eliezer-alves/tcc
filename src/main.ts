@@ -1,9 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as compression from 'compression';
+
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  if (process.env.COMPRESS === 'true') app.use(compression());
+  if (process.env.LOGGER === 'false') app.useLogger(false);
+
   // Configuração básica do Swagger
   const config = new DocumentBuilder()
     .setTitle('TCC')
