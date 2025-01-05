@@ -15,11 +15,11 @@ services:
       - '3000'
     depends_on:
       - postgres
-    deploy:
-      resources:
-        limits:
-          cpus: '0.45'
-          memory: '0.5G'
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.45'
+    #       memory: '0.5G'
 
   # Instância 2 da API
   api2:
@@ -50,11 +50,11 @@ services:
       timeout: 5s
       retries: 20
       start_period: 10s
-    deploy:
-      resources:
-        limits:
-          cpus: '0.45'
-          memory: '8G'
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.45'
+    #       memory: '8G'
 
   # Serviço Nginx para balanceamento de carga
   nginx:
@@ -67,11 +67,11 @@ services:
       - api2
     ports:
       - '80:9999'
-    deploy:
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: '0.2GB'
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.1'
+    #       memory: '0.2GB'
     ulimits:
       nproc: 1000000
       nofile:
