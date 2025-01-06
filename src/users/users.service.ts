@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { ShowUserDto } from './dto/show-user.dto';
 import { User } from './entities/user.entity';
@@ -10,55 +9,26 @@ export class UsersService {
   constructor(private repository: IUserRepository) {}
 
   async create(data: CreateUserDto) {
-    // Simulando uma resposta constante para evitar o acesso ao banco
-    return {
-      id: 'mockId',
-      name: 'mockName',
-      username: data.email,
-      email: data.email,
-    };
+    return this.repository.create({ ...data, username: data.email });
   }
 
   async findOne(id: string): Promise<ShowUserDto | undefined> {
-    // Simulando uma resposta constante para evitar o acesso ao banco
-    return {
-      id: 'mockId',
-      name: 'mockName',
-      username: 'mockUsername',
-      email: 'mockEmail@example.com',
-    };
+    return this.repository.find(id);
   }
 
   async findForAuth(username: string): Promise<User | undefined> {
-    // Simulando uma resposta constante para evitar o acesso ao banco
-    return { id: 'mockId', username, password: 'mockPassword' } as User;
+    return this.repository.findByUsername(username);
   }
 
   async findUniqueByEmail(email: string): Promise<ShowUserDto | undefined> {
-    // Simulando uma resposta constante para evitar o acesso ao banco
-    return { id: 'mockId', name: 'mockName', username: 'mockUsername', email };
+    return this.repository.findUniqueByEmail(email);
   }
 
   async search(term: string): Promise<Array<ShowUserDto> | undefined> {
-    // Simulando uma resposta constante para evitar o acesso ao banco
-    return [
-      {
-        id: 'mockId1',
-        name: 'mockName1',
-        username: 'mockUsername1',
-        email: 'mockEmail1@example.com',
-      },
-      {
-        id: 'mockId2',
-        name: 'mockName2',
-        username: 'mockUsername2',
-        email: 'mockEmail2@example.com',
-      },
-    ];
+    return this.repository.search(term);
   }
 
   async countUsers(): Promise<number> {
-    // Simulando uma resposta constante para evitar o acesso ao banco
-    return 42;
+    return this.repository.count();
   }
 }
