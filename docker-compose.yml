@@ -40,9 +40,9 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-    command: postgres -c 'max_connections=100'
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
     volumes:
-      - ./postgresql.conf:/etc/postgresql.conf
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
     ports:
       - '5432:5432'
     healthcheck:
